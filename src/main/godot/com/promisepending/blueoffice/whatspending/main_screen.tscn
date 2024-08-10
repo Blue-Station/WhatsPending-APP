@@ -1,8 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2f2vxracotw8"]
 
 [ext_resource type="Script" path="res://gdj/com/promisepending/blueoffice/whatspending/Simple.gdj" id="1_pkihr"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_18lt5"]
+[ext_resource type="Texture2D" uid="uid://42tmt21texrm" path="res://src/main/resources/images/login_stage1.jpg" id="2_8vd5w"]
 
 [node name="MainScreen" type="Control"]
 layout_mode = 3
@@ -11,6 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Simple" type="Control" parent="."]
 anchors_preset = 0
@@ -19,9 +20,12 @@ offset_bottom = 40.0
 script = ExtResource("1_pkihr")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("ImageTexture_18lt5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8vd5w")
 expand_mode = 2
-stretch_mode = 3
+stretch_mode = 6

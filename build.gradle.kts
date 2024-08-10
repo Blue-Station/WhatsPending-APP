@@ -21,7 +21,7 @@ godot {
     //isRegistrationFileHierarchyEnabled.set(true)
 
     // defines whether your scripts should be registered with their fqName or their simple name (can help with resolving script name conflicts)
-    isFqNameRegistrationEnabled.set(false)
+    isFqNameRegistrationEnabled.set(true)
 
     // library setup. See: https://godot-kotl.in/en/stable/develop-libraries/
     // only really needed for library authors. See: https://godot-kotl.in/en/stable/develop-libraries/setup/
