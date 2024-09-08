@@ -8,5 +8,5 @@
         x:Class="WhatsPendingApp.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="WhatsPendingApp">
-        <views:MainView />
+        <views:AuthView />
 </Window>
