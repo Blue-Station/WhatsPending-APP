@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text.Json;
 using System.Diagnostics;
+using System;
+using Avalonia.Controls;
 
 namespace WhatsPendingApp.ViewModels;
 
@@ -17,8 +19,10 @@ public partial class AuthViewModel : ViewModelBase {
 
     [ObservableProperty]
     private string _greeting = "Eu sou a AuthView!";
-    
-    [RelayCommand(CanExecute = nameof(CanLogin))]
+
+  public AuthViewModel(Router router) : base(router) {}
+
+  [RelayCommand(CanExecute = nameof(CanLogin))]
     private async Task Login() {
       
 
