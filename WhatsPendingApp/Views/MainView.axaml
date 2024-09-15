@@ -9,9 +9,7 @@
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
-  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="HotPink">
-    <TextBlock Text="Sabonente!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width='fill' Height='fill'>
     <ContentControl Content="{Binding Content}"></ContentControl>
-    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ChangeCommand}">Change</Button>
   </StackPanel>
 </UserControl>

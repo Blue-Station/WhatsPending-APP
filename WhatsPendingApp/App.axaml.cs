@@ -13,21 +13,21 @@ using WhatsPendingApp.Views;
 namespace WhatsPendingApp;
 
 public class Router {
-  public List<Control> currentRoute = new();
+  public List<Control> currentRoute = [];
   public Action onChangeAction = default!;
 
-  public bool setRoute(Control view) {
+  public bool SetRoute(Control view) {
     currentRoute.Add(view);
     onChangeAction();
     return true;
   }
 
-  public void back() {
+  public void Back() {
     currentRoute.RemoveAt(currentRoute.Count - 1);
     onChangeAction();
   }
 
-  public void onChange(Action update) {
+  public void OnChange(Action update) {
     onChangeAction = update;
   }
 }
@@ -38,7 +38,7 @@ public partial class App : Application {
     AvaloniaXamlLoader.Load(this);
   }
 
-  private readonly Router router = new();
+  public readonly Router router = new();
 
   public override void OnFrameworkInitializationCompleted() {
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
@@ -55,8 +55,8 @@ public partial class App : Application {
       };
     }
 
-    router.setRoute(new AuthView{
-      DataContext = new AuthViewModel(router)
+    router.SetRoute(new AuthView{
+      DataContext = new AuthViewModel()
     });
 
     base.OnFrameworkInitializationCompleted();

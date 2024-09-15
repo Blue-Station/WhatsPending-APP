@@ -20,8 +20,6 @@ public partial class AuthViewModel : ViewModelBase {
     [ObservableProperty]
     private string _greeting = "Eu sou a AuthView!";
 
-  public AuthViewModel(Router router) : base(router) {}
-
   [RelayCommand(CanExecute = nameof(CanLogin))]
     private async Task Login() {
       

@@ -7,12 +7,10 @@ using WhatsPendingApp.Views;
 
 namespace WhatsPendingApp.ViewModels;
 
-public partial class AboutViewModel : ViewModelBase {
-  public AboutViewModel(Router router) : base(router) {}
-
+public partial class AboutViewModel(Router router) : ViewModelBase {
   [RelayCommand]
   private async Task ChangeBack() {
     await Task.Delay(1000);
-    router.back();
+    router.Back();
   }
 }

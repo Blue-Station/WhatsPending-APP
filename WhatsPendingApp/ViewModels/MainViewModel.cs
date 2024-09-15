@@ -10,9 +10,11 @@ namespace WhatsPendingApp.ViewModels;
 public partial class MainViewModel : ViewModelBase {
   [ObservableProperty]
   public Control _content = default!;
+  private readonly Router router;
 
-  public MainViewModel(Router router) : base(router) {
-    router.onChange(() => {
+  public MainViewModel(Router router) {
+    this.router = router;
+    router.OnChange(() => {
       Content = router.currentRoute[^1];
     });
   }
@@ -20,8 +22,5 @@ public partial class MainViewModel : ViewModelBase {
   [RelayCommand]
   private async Task Change() {
     await Task.Delay(1000);
-    router.setRoute(new AboutView{
-      DataContext = new AboutViewModel(router)
-    });
   }
 }

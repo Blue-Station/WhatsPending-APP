@@ -7,9 +7,4 @@ using WhatsPendingApp.Views;
 namespace WhatsPendingApp.ViewModels;
 
 public abstract partial class ViewModelBase : ObservableObject {
-  protected Router router;
-
-  public ViewModelBase(Router appRouter) {
-    router = appRouter;
-  }
 }
