@@ -20,6 +20,8 @@ public partial class AuthViewModel : ViewModelBase {
     [ObservableProperty]
     private string _greeting = "Eu sou a AuthView!";
 
+    [ObservableProperty] private bool _shouldHaveBackground = !(OperatingSystem.IsWindows() || OperatingSystem.IsMacOS());
+
   [RelayCommand(CanExecute = nameof(CanLogin))]
     private async Task Login() {
       

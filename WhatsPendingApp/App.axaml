@@ -11,5 +11,9 @@
 
     <Application.Styles>
         <FluentTheme />
+        <Style Selector="TextBlock.myCustomStyle">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="Blue" />
+    </Style>
     </Application.Styles>
 </Application>

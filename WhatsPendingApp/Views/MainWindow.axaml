@@ -7,6 +7,13 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WhatsPendingApp.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="WhatsPendingApp">
+        Title="WhatsPendingApp"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        SystemDecorations="Full"
+        CanResize="True">
         <views:MainView />
 </Window>

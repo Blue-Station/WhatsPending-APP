@@ -3,17 +3,39 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:vm="clr-namespace:WhatsPendingApp.ViewModels"
-            x:Class="WhatsPendingApp.Views.AuthView"
+            xmlns:components="clr-namespace:WhatsPendingApp.Views.components"
+            x:Class="WhatsPendingApp.Views.pages.AuthView"
             x:DataType="vm:AuthViewModel">
-
-  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="purple">
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Login de verdadezinha topzeira</TextBlock>
-    <TextBlock>Nome do usuario: </TextBlock>
-    <TextBox Watermark="username" Name="username" Text="{Binding Username}"/>
-    <TextBlock>Password: </TextBlock>
-    <TextBox Watermark="password" PasswordChar="*" Name="password" Text="{Binding Password}"/>
-    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding LoginCommand}">Login</Button>
-  </StackPanel>
-
+  <Grid
+    Width="NaN"
+    Height="NaN"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
+    <Image
+      Source="avares://WhatsPendingApp/Assets/placeholder.png"
+      Stretch="UniformToFill"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      IsVisible="{Binding ShouldHaveBackground}"></Image>
+    <Grid Background="#5000"
+                Width="NaN"
+                Height="NaN">
+      <Border Background="Orange"
+              CornerRadius="25"
+              Padding="15"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+        <StackPanel>
+          <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Login de verdadezinha</TextBlock>
+          <TextBlock>Nome do usuario: </TextBlock>
+          <TextBox Watermark="username" Name="username" Text="{Binding Username}"/>
+          <components:TextBox />
+          <TextBlock>Password: </TextBlock>
+          <TextBox Watermark="password" PasswordChar="*" Name="password" Text="{Binding Password}"/>
+          <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding LoginCommand}">Login</Button>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Grid>
 </UserControl>

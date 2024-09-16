@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using WhatsPendingApp.ViewModels;
 using WhatsPendingApp.Views;
+using WhatsPendingApp.Views.pages;
 
 namespace WhatsPendingApp;
 
