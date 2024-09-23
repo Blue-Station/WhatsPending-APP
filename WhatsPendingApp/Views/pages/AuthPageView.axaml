@@ -11,12 +11,12 @@
     Height="NaN"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch">
-    <Image
+    <!-- <Image
       Source="avares://WhatsPendingApp/Assets/placeholder.png"
       Stretch="UniformToFill"
       HorizontalAlignment="Stretch"
       VerticalAlignment="Stretch"
-      IsVisible="{Binding ShouldHaveBackground}"></Image>
+      IsVisible="{Binding ShouldHaveBackground}"></Image> -->
     <Grid Background="#5000"
                 Width="NaN"
                 Height="NaN">

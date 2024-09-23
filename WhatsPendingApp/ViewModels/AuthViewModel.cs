@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Diagnostics;
 using System;
 using Avalonia.Controls;
+using Microsoft.VisualBasic;
 
 namespace WhatsPendingApp.ViewModels;
 
@@ -21,6 +22,7 @@ public partial class AuthViewModel : ViewModelBase {
     private string _greeting = "Eu sou a AuthView!";
 
     [ObservableProperty] private bool _shouldHaveBackground = !(OperatingSystem.IsWindows() || OperatingSystem.IsMacOS());
+    // get windows and macos window decoration top bar height
 
   [RelayCommand(CanExecute = nameof(CanLogin))]
     private async Task Login() {

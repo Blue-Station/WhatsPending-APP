@@ -1,0 +1,10 @@
+<ContentControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="WhatsPendingApp.Views.components.TopBar">
+    <Border IsHitTestVisible="False" Height="NaN" Width="NaN" Background="#55f">
+      <ReversibleStackPanel Orientation="Horizontal" FlowDirection="{Binding SystemUIDirection, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Border Width="{Binding SystemUIWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" Background="Magenta" Height="NaN" />
+        <ContentPresenter Content="{TemplateBinding Content}" Width="NaN" Height="NaN" />
+      </ReversibleStackPanel>
+    </Border>
+</ContentControl>
