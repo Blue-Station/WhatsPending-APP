@@ -19,8 +19,9 @@ async function processProject(project: string): Promise<number> {
   });
 }
 
-export default async function Page({ params }: { params: { project: string } }): Promise<ReactElement> {
-  const project = decodeURIComponent(params.project);
+export default async function Page({ params }: { params: Promise<{ project: string }> }): Promise<ReactElement> {
+  const parameters = (await params);
+  const project = decodeURIComponent(parameters.project);
 
   const result = await processProject(project);
 

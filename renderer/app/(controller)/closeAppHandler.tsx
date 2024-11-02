@@ -23,7 +23,7 @@ export default function CloseAppHandler(): ReactElement {
       closeModal.show();
     });
 
-    return () => {
+    return (): void => {
       ((globalThis as any).ipc)?.removeAllListeners('app.stop.ask');
     };
   });

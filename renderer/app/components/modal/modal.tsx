@@ -55,7 +55,13 @@ export function modalBuilder(
     >
       {html}
     </Modal>,
-    show: (extraCallback?: () => void): void => { setOpen(true); setExtraCallback(():(() => void) => () => { if (extraCallback) extraCallback(); }); },
+    show: (extraCallback?: () => void): void => {
+      setOpen(true);
+      // eslint-disable-next-line unicorn/consistent-function-scoping
+      setExtraCallback((): (() => void) => () => {
+        if (extraCallback) extraCallback();
+      });
+    },
     hide: (): void => setOpen(false),
   };
 }

@@ -7,7 +7,7 @@ import { createServer } from 'node:http';
 import { Window } from './helpers/index.js';
 import serve from 'electron-serve';
 import { events } from './events/index.js';
-import url from 'node:url';
+import { parse } from 'node:url';
 import next from 'next';
 import path from 'node:path';
 
@@ -70,10 +70,11 @@ export class Backend {
       process.exit(0);
     });
 
+    console.log(app.getAppPath());
     // @ts-expect-error
     const nextApp = next({
       dev: isDev,
-      dir: path.resolve(app.getAppPath(), 'renderer'),
+      dir: path.resolve(app.getAppPath(), '..', 'renderer'),
     });
     const requestHandler = nextApp.getRequestHandler();
 
@@ -83,20 +84,14 @@ export class Backend {
     this.logger.info('> Starting on http://localhost:' + (process.env.SMP_PORT || 3000));
     // Create a new native HTTP server (which supports hot code reloading)
     createServer((request: any, res: any) => {
-      const parsedUrl = new url.URL(request.url);
-      const nxtQuery: NextUrlWithParsedQuery = {
-        ...parsedUrl,
-        query: Object.fromEntries(parsedUrl.searchParams.entries()),
-        auth: parsedUrl.username ? `${parsedUrl.username}:${parsedUrl.password}` : null,
-        path: parsedUrl.pathname + parsedUrl.search,
-        slashes: true,
-      };
-      requestHandler(request, res, nxtQuery);
+      console.log(request);
+      const parsedUrl = parse(request.url);
+      requestHandler(request, res, parsedUrl);
     }).listen(process.env.SMP_PORT || 3000, () => {
       this.logger.info('> Ready on http://localhost:' + (process.env.SMP_PORT || 3000));
+      this.mainWindow.loadURL('/');
     });
 
-    this.mainWindow.loadURL('/home');
   }
 
   private async registerEvents(): Promise<void> {

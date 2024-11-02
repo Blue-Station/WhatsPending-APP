@@ -9,50 +9,50 @@ export default function Page(): ReactElement {
   const router = useRouter();
   const [projects, setProjects] = useState<string[]>([]);
 
-  useEffect(() => {
-    const alert = (globalThis as any)?.alert;
-    const ipc = (globalThis as any)?.ipc;
+  // useEffect(() => {
+  //   const alert = (globalThis as any)?.alert;
+  //   const ipc = (globalThis as any)?.ipc;
 
-    // load projects from the store
-    const projectStore: Store = (globalThis as any)?.store?.createStore({
-      name: 'projects',
-    });
+  //   // load projects from the store
+  //   const projectStore: any = (globalThis as any)?.store?.createStore({
+  //     name: 'projects',
+  //   });
 
-    var projectsLoaded = projectStore.get('projects') as string[] || [];
+  //   var projectsLoaded = projectStore.get('projects') as string[] || [];
 
-    if (projectsLoaded && projectsLoaded.length > 0) {
-      setProjects(projectsLoaded);
-    }
+  //   if (projectsLoaded && projectsLoaded.length > 0) {
+  //     setProjects(projectsLoaded);
+  //   }
 
-    ipc.on('app.openDialog.response', ([data]: any[]) => {
-      projectsLoaded = projectStore.get('projects') as string[] || [];
+  //   ipc.on('app.openDialog.response', ([data]: any[]) => {
+  //     projectsLoaded = projectStore.get('projects') as string[] || [];
 
-      if (data[0]) {
-        if (projectsLoaded.includes(data[0])) {
-          alert('Já existe um projeto nesse diretório!');
-          return;
-        }
-        // add the project to the store
-        projectsLoaded.push(data[0]);
+  //     if (data[0]) {
+  //       if (projectsLoaded.includes(data[0])) {
+  //         alert('Já existe um projeto nesse diretório!');
+  //         return;
+  //       }
+  //       // add the project to the store
+  //       projectsLoaded.push(data[0]);
 
-        projectStore.set('projects', projectsLoaded);
+  //       projectStore.set('projects', projectsLoaded);
 
-        setProjects(projectsLoaded);
+  //       setProjects(projectsLoaded);
 
-        router.push(`/controller/setup/${encodeURIComponent(data[0])}`);
-      } else {
-        alert('An unknown error has occurred!');
-      }
-    });
+  //       router.push(`/controller/setup/${encodeURIComponent(data[0])}`);
+  //     } else {
+  //       alert('An unknown error has occurred!');
+  //     }
+  //   });
 
-    ipc.on('app.openDialog.error', ([data]: any[]) => {
-      alert('ERRO: ' + data);
-    });
-    return (): void => {
-      ipc.removeAllListeners('app.openDialog.response');
-      ipc.removeAllListeners('app.openDialog.error');
-    };
-  }, []);
+  //   ipc.on('app.openDialog.error', ([data]: any[]) => {
+  //     alert('ERRO: ' + data);
+  //   });
+  //   return (): void => {
+  //     ipc.removeAllListeners('app.openDialog.response');
+  //     ipc.removeAllListeners('app.openDialog.error');
+  //   };
+  // }, []);
 
   return (
     <div id={styles.homePage}>
@@ -70,7 +70,7 @@ export default function Page(): ReactElement {
                 <span className={styles.projectName}>{projectName}</span>
               </Link>
               <button title='Remover da lista' className={styles.removeProjectButton} onClick={(): void => {
-                const projectStore: Store = (globalThis as any)?.store?.createStore({
+                const projectStore: any = (globalThis as any)?.store?.createStore({
                   name: 'projects',
                 });
                 const projectsLoaded = projectStore.get('projects') as string[] || [];
