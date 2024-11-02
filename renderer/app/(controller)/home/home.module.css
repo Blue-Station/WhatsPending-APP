@@ -1,0 +1,131 @@
+#homePage {
+  --homePage-background: var(--gray-900);
+  --homePage-color: var(--white);
+
+  background: var(--homePage-background);
+  color: var(--homePage-color);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+#projects {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: auto;
+  position: relative;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 0.1rem solid var(--white);
+  border-radius: 0.5rem;
+  width: 100%;
+  height: 100%
+}
+
+.project {
+  --project-background: var(--gray-800);
+  --project-color: var(--white);
+
+  background: var(--project-background);
+  color: var(--project-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--project-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  min-height: 3rem;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.project:hover {
+  --project-background: var(--gray-500);
+}
+
+.projectLink {
+  text-decoration: none;
+}
+
+.projectName {
+  white-space: nowrap;
+  color: var(--project-color);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.removeProjectButton {
+  background: var(--bright-red);
+  color: var(--white);
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  padding: 0.25rem;
+  aspect-ratio: 1;
+  width: 1.25rem;
+}
+
+.addProjectButton {
+  cursor: pointer;
+  padding: 0.25rem;
+  aspect-ratio: 1;
+  width: 1.25rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addProjectButton .iconpart {
+  width: 100%;
+  height: 15%;
+  background: var(--white);
+  border-radius: 100vmax;
+  position: absolute;
+}
+
+.addProjectButton .iconpart:last-child {
+  rotate: 90deg;
+}
+
+.removeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.removeIcon .iconpart {
+  width: 100%;
+  height: 15%;
+  background: var(--white);
+  border-radius: 100vmax;
+  position: absolute;
+  rotate: 45deg;
+}
+
+.removeIcon .iconpart:last-child {
+  rotate: -45deg;
+}
+
+#mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+}

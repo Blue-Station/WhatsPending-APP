@@ -1,0 +1,57 @@
+{
+  "name": "whatspendingapp",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "PromisePending Team",
+    "email": "contato@allonsve.com"
+  },
+  "contributors": [
+    "LoboMetalurgico",
+    "SpaceFox__"
+  ],
+  "license": "GPL-3.0",
+  "type": "module",
+  "exports": "./main/background.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "rimraf dist main renderer/out renderer/.next",
+    "dev": "npm run build && electron main/background.js",
+    "build-renderer": "next build renderer",
+    "build-electron": "tsc -p electron/",
+    "build": "npm run build-renderer && npm run build-electron",
+    "pack-app": "npm run build && electron-builder --dir",
+    "dist": "npm run clean && npm run build && electron-builder",
+    "type-check": "tsc -p ./renderer/tsconfig.json && tsc -p ./electron/tsconfig.json",
+    "eslint:fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@promisepending/logger.js": "^2.0.0-alpha.1",
+    "electron-is-dev": "^3.0.1",
+    "electron-next": "^3.1.5",
+    "electron-serve": "^2.1.1",
+    "electron-store": "^10.0.0",
+    "next": "^15.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tcp-port-used": "^1.0.2"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^15.0.2",
+    "@types/node": "^22.8.6",
+    "@types/react": "^18.2.33",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@typescript-eslint/parser": "^8.12.2",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
+    "eslint": "^9.14.0",
+    "eslint-plugin-electron": "^7.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-unicorn": "^56.0.0",
+    "typescript": "^5.5.2"
+  }
+}

@@ -1,0 +1,80 @@
+name: Build
+on: [push, pull_request]
+
+jobs:
+  build_on_linux:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@master
+      with:
+        node-version: 20
+    - id: get_version
+      name: Get Version
+      run: echo "version=$(node -p 'require(`./package.json`).version')" >> "$GITHUB_OUTPUT"
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run dist
+    - uses: actions/upload-artifact@v3
+      if: success()
+      name: Linux (DEB)
+      with:
+        name: GLP-Deb-v${{ steps.get_version.outputs.version }}.deb
+        path: |
+          dist/GLP-*.deb
+    - uses: actions/upload-artifact@v3
+      if: success()
+      name: Linux (AppImage)
+      with:
+        name: GLP-AppImage-v${{ steps.get_version.outputs.version }}.AppImage
+        path: |
+          dist/GLP-*.AppImage
+
+  build_on_mac:
+    runs-on: macos-latest
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@master
+      with:
+        node-version: 20
+    - id: get_version
+      name: Get Version
+      run: echo "version=$(node -p 'require(`./package.json`).version')" >> "$GITHUB_OUTPUT"
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run dist
+    - uses: actions/upload-artifact@v3
+      if: success()
+      name: Upload Mac Distribution
+      with:
+        name: GLP-Darwin-v${{ steps.get_version.outputs.version }}.dmg
+        path: dist/GLP-*.dmg
+
+  build_on_win:
+    runs-on: windows-latest
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@master
+      with:
+        node-version: 20
+    - id: get_version
+      name: Get Version
+      run: echo "version=$(node -p 'require(`./package.json`).version')" >> "$GITHUB_OUTPUT"
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run dist
+    - uses: actions/upload-artifact@v3
+      if: success()
+      name: Upload Windows Distribution
+      with:
+        name: GLP-Win-v${{ steps.get_version.outputs.version }}.exe
+        path: |
+          dist/GLP-win-*.exe
+          !dist/GLP-win-ia32-*.exe
+          !dist/GLP-win-x64-*.exe
