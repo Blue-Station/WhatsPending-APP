@@ -9,7 +9,7 @@ export default function Header(): React.ReactElement {
       <div id={styles.draggableRegion}></div>
       <div id={styles.headerContent}>
         <div id={styles.leftSide}>
-          <h1 id={styles.appTitle}>GreenLight Presentation</h1>
+          <h1 id={styles.appTitle}>Whats&lt;Pending&gt;</h1>
         </div>
         <div id={styles.rightSide}>
           <div id={styles.actionButtons}>

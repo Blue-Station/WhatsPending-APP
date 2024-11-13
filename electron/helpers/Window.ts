@@ -22,13 +22,14 @@ export class Window {
     this.restore();
     this.ensureVisibleOnSomeDisplay();
 
+    console.log(import.meta.dirname);
     const browserOptions: BrowserWindowConstructorOptions = {
       ...this.state,
       ...options,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: true,
-        preload: path.join(import.meta.dirname, '..', 'preload.js'),
+        preload: path.join(import.meta.dirname, '..', 'preload', 'preload.cjs'),
         ...options.webPreferences,
       },
     };

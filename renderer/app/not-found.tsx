@@ -1,6 +1,7 @@
-import { redirect } from 'next/navigation.js';
+import React from 'react';
 
-export default function notFound(): void {
-  // redirect to home page
-  redirect('/home');
+export default function notFound(): React.ReactElement {
+  return (<div>
+    <h1>404</h1>
+  </div>);
 }

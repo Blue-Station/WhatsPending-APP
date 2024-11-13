@@ -1,7 +1,13 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import Store from 'electron-store';
 import path from 'node:path';
 import fs from 'node:fs';
+
+let Store;
+
+// eslint-disable-next-line unicorn/prefer-top-level-await
+(async (): Promise<void> => {
+  Store = await import('electron-store');
+})();
 
 const handler = {
   send(channel: string, value: unknown): void {
@@ -46,7 +52,7 @@ const store = {
     delete: (key: string) => void;
     clear: () => void;
   } {
-    const createdStore = new Store(options) as any;
+    const createdStore = new Store.default(options) as any;
 
     return {
       get: (key: string): unknown => { return createdStore.get(key); },

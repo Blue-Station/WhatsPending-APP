@@ -1,5 +1,4 @@
-import Electron, { app, Tray, nativeImage, IpcMainEvent, ipcMain } from 'electron';
-import { NextUrlWithParsedQuery } from 'next/dist/server/request-meta.js';
+import Electron, { app, Tray, nativeImage, IpcMainEvent, ipcMain, Menu, MenuItem } from 'electron';
 import { Logger, ConsoleEngine } from '@promisepending/logger.js';
 import { BaseEventStructure } from './structures/index.js';
 import isDev from 'electron-is-dev';
@@ -7,7 +6,6 @@ import { createServer } from 'node:http';
 import { Window } from './helpers/index.js';
 import serve from 'electron-serve';
 import { events } from './events/index.js';
-import { parse } from 'node:url';
 import next from 'next';
 import path from 'node:path';
 
@@ -49,6 +47,22 @@ export class Backend {
     const icon = nativeImage.createFromPath('resources/icon.png');
     this.systemTray = new Tray(icon);
 
+    const trayMenu = new Menu();
+    const trayMenuItem1 = new MenuItem({
+      label: 'Close',
+      type: 'normal',
+      click: (): void => {
+        process.exit(0);
+      },
+    });
+    trayMenu.append(trayMenuItem1);
+
+    this.systemTray.addListener('click', () => {
+      this.mainWindow.windowInstance.show();
+    });
+
+    this.systemTray.setContextMenu(trayMenu);
+
     this.mainWindow = new Window(this, 'controller', {
       width: 800,
       height: 600,
@@ -61,18 +75,16 @@ export class Backend {
 
     this.mainWindow.windowInstance.on('close', (event: Electron.Event) => {
       event.preventDefault();
-      // Ask user if he really wants to close the application
-      this.mainWindow!.windowInstance.webContents.send('app.stop.ask');
-      this.logger.debug('Main window close event received');
+      this.mainWindow.windowInstance.hide();
+    //   // Ask user if he really wants to close the application
+    //   this.mainWindow!.windowInstance.webContents.send('app.stop.ask');
+    //   this.logger.debug('Main window close event received');
+
     });
 
-    this.mainWindow.windowInstance.once('closed', () => {
-      process.exit(0);
-    });
+    // this.mainWindow.windowInstance.once('closed', () => process.exit(0));
 
-    console.log(app.getAppPath());
-    // @ts-expect-error
-    const nextApp = next({
+    const nextApp = (next as unknown as typeof next.default)({
       dev: isDev,
       dir: path.resolve(app.getAppPath(), '..', 'renderer'),
     });
@@ -84,12 +96,10 @@ export class Backend {
     this.logger.info('> Starting on http://localhost:' + (process.env.SMP_PORT || 3000));
     // Create a new native HTTP server (which supports hot code reloading)
     createServer((request: any, res: any) => {
-      console.log(request);
-      const parsedUrl = parse(request.url);
-      requestHandler(request, res, parsedUrl);
+      requestHandler(request, res);
     }).listen(process.env.SMP_PORT || 3000, () => {
       this.logger.info('> Ready on http://localhost:' + (process.env.SMP_PORT || 3000));
-      this.mainWindow.loadURL('/');
+      this.mainWindow.loadURL('/lang/home');
     });
 
   }

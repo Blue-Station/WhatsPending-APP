@@ -18,7 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
-    "dev": "npm run build && electron main/background.js",
+    "dev": "npm run build-electron && electron main/background.js",
     "build-renderer": "next build renderer",
     "build-electron": "tsc -p electron/",
     "build": "npm run build-renderer && npm run build-electron",

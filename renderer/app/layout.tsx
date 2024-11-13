@@ -1,5 +1,8 @@
 import React from 'react';
 import './globals.css';
+import Header from './components/header/header';
+import CloseAppHandler from './closeAppHandler';
+import styles from './general.module.css';
 
 export default function Layout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
@@ -9,7 +12,11 @@ export default function Layout({ children }: { children: React.ReactNode }): Rea
       </head>
       <body>
         <div id='appContainer'>
-          {children}
+          <Header />
+          <CloseAppHandler />
+          <div id={styles.controlContainer}>
+            {children}
+          </div>
         </div>
       </body>
     </html>

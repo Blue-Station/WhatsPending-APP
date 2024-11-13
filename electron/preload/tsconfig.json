@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "esModuleInterop": false,
+    "moduleResolution": "NodeNext",
+    "target": "ES2017",
+    "lib": ["dom", "ES5"],
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "preload.cts"]
+}
