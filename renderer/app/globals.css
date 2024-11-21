@@ -1,5 +1,5 @@
 :root {
-  --header-height: 1.75rem;
+  --header-height: env(titlebar-area-height, 1.75rem);
   --max-width: 1407px;
   --border-radius: 0.5rem;
 

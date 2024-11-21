@@ -32,6 +32,8 @@ export class Window {
         preload: path.join(import.meta.dirname, '..', 'preload', 'preload.cjs'),
         ...options.webPreferences,
       },
+      ...(process.platform === 'darwin' ? {} : { titleBarOverlay: true }),
+      titleBarStyle: 'hidden',
     };
 
     this.window = new BrowserWindow(browserOptions);

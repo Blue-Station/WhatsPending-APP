@@ -66,7 +66,7 @@ export class Backend {
     this.mainWindow = new Window(this, 'controller', {
       width: 800,
       height: 600,
-      frame: false,
+      // frame: false,
       minWidth: 800,
       minHeight: 600,
     });
@@ -76,13 +76,7 @@ export class Backend {
     this.mainWindow.windowInstance.on('close', (event: Electron.Event) => {
       event.preventDefault();
       this.mainWindow.windowInstance.hide();
-    //   // Ask user if he really wants to close the application
-    //   this.mainWindow!.windowInstance.webContents.send('app.stop.ask');
-    //   this.logger.debug('Main window close event received');
-
     });
-
-    // this.mainWindow.windowInstance.once('closed', () => process.exit(0));
 
     const nextApp = (next as unknown as typeof next.default)({
       dev: isDev,
