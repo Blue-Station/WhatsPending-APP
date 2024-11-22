@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }): Rea
   return (
     <html unselectable='on'>
       <head>
-        <title>GreenLight Presentation</title>
+        <title>Whats&lt;Pending&gt;</title>
       </head>
       <body>
         <div id='appContainer'>

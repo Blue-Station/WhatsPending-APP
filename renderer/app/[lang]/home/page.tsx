@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function Page(): ReactElement {
   return (
     <div id={styles.homePage}>
-      <Link href='/login'>DEBUG</Link>
+      <Link href='/a/login'>DEBUG</Link>
     </div>
   );
 }

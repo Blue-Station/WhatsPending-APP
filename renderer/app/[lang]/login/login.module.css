@@ -1,0 +1,22 @@
+#loginPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: var(--login-background);
+  background-size: cover;
+  background-position: center;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--login-form-background);
+  padding: 1.5rem;
+  gap: 1rem;
+  justify-content: space-between;
+  border-radius: calc(var(--border-radius) * 1rem);
+}

@@ -1,19 +1,21 @@
 import Electron, { app, Tray, nativeImage, IpcMainEvent, ipcMain, Menu, MenuItem } from 'electron';
 import { Logger, ConsoleEngine } from '@promisepending/logger.js';
 import { BaseEventStructure } from './structures/index.js';
-import isDev from 'electron-is-dev';
-import { createServer } from 'node:http';
 import { Window } from './helpers/index.js';
-import serve from 'electron-serve';
 import { events } from './events/index.js';
-import next from 'next';
+import { createServer } from 'node:http';
+import tcpPortUsed from 'tcp-port-used';
+import isDev from 'electron-is-dev';
+import serve from 'electron-serve';
 import path from 'node:path';
+import next from 'next';
 
 export class Backend {
   private readonly isProd: boolean = process.env.NODE_ENV === 'production';
   private mainWindow?: Window;
   private systemTray?: Tray;
   private logger: Logger;
+  private port: number;
 
   public static main(logger?: Logger): Backend {
     return new Backend(logger);
@@ -46,6 +48,8 @@ export class Backend {
   private async start(): Promise<void> {
     const icon = nativeImage.createFromPath('resources/icon.png');
     this.systemTray = new Tray(icon);
+    this.systemTray.setTitle('WhatsPending');
+    this.systemTray.setToolTip('WhatsPending');
 
     const trayMenu = new Menu();
     const trayMenuItem1 = new MenuItem({
@@ -78,6 +82,12 @@ export class Backend {
       this.mainWindow.windowInstance.hide();
     });
 
+    this.port = Number(process.env.SMP_PORT) || Math.floor(Math.random() * (65535 - 49152) + 49152);
+
+    while (await tcpPortUsed.check(this.port)) {
+      this.port = Math.floor(Math.random() * (65535 - 49152) + 49152);
+    }
+
     const nextApp = (next as unknown as typeof next.default)({
       dev: isDev,
       dir: path.resolve(app.getAppPath(), '..', 'renderer'),
@@ -87,15 +97,14 @@ export class Backend {
     // Build the renderer code and watch the files
     await nextApp.prepare();
 
-    this.logger.info('> Starting on http://localhost:' + (process.env.SMP_PORT || 3000));
+    this.logger.info('> Starting on http://localhost:' + this.port);
     // Create a new native HTTP server (which supports hot code reloading)
     createServer((request: any, res: any) => {
       requestHandler(request, res);
-    }).listen(process.env.SMP_PORT || 3000, () => {
-      this.logger.info('> Ready on http://localhost:' + (process.env.SMP_PORT || 3000));
+    }).listen(this.port, () => {
+      this.logger.info('> Ready on http://localhost:' + this.port);
       this.mainWindow.loadURL('/lang/home');
     });
-
   }
 
   private async registerEvents(): Promise<void> {
@@ -132,5 +141,9 @@ export class Backend {
 
   public isProduction(): boolean {
     return this.isProd;
+  }
+
+  public getPort(): number {
+    return this.port;
   }
 }

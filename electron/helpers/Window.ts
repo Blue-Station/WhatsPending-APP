@@ -34,6 +34,7 @@ export class Window {
       },
       ...(process.platform === 'darwin' ? {} : { titleBarOverlay: true }),
       titleBarStyle: 'hidden',
+      icon: path.join(import.meta.dirname, '..', '..', 'resources', 'icon.png'),
     };
 
     this.window = new BrowserWindow(browserOptions);
@@ -161,7 +162,7 @@ export class Window {
    * @returns A promise that resolves when the URL is loaded.
    **/
   public async loadURL(url: string): Promise<void> {
-    return this.window.loadURL(`http://localhost:${process.env.SMP_PORT || 3000}${url}`);
+    return this.window.loadURL(`http://localhost:${this.backend.getPort()}${url}`);
   }
 
   get windowInstance(): BrowserWindow {

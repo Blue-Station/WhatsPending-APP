@@ -1,7 +1,7 @@
-appId: com.allonsve.promisepending.spinapps.spinmusicplayer
-productName: GreenLight Presentation
-copyright: Copyright © 2019 - 2023 GreenLightPro
-artifactName: GLP-${os}-${arch}-${version}.${ext}
+appId: com.promisepending.bluestation.whatspending
+productName: Whats<Pending>
+copyright: Copyright © 2019 - 2023 BlueStation
+artifactName: WP-${os}-${arch}-${version}.${ext}
 directories:
   output: dist
   buildResources: resources
