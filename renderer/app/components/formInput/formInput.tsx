@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, HTMLInputTypeAttribute, useEffect, useRef } from 'react';
+import React, { useState, HTMLInputTypeAttribute, useEffect, useRef } from 'react';
 import styles from './formInput.module.css';
 
 export interface IFormInputProps {
@@ -12,10 +12,12 @@ export interface IFormInputProps {
   loading?: boolean;
   onClick?: () => Promise<void>;
   required?: boolean;
+  tabIndex?: number;
 }
 
-export default function FormInput(props: IFormInputProps) {
+export default function FormInput(props: IFormInputProps): React.ReactNode {
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-undef
   const inputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -38,12 +40,15 @@ export default function FormInput(props: IFormInputProps) {
         placeholder=' '
         disabled={props.disabled}
         ref={inputRef}
+        tabIndex={props.tabIndex ?? 0}
         onClick={() => {
           if (props.type !== 'button' && props.type !== 'submit') return;
-          setLoading(true);
-          if (props.onClick) props.onClick().finally(() => setLoading(false));
+          if (props.onClick) {
+            setLoading(true);
+            props.onClick().finally(() => setLoading(false));
+          }
         }}
       />
     </div>
-  )
+  );
 }

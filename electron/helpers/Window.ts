@@ -22,7 +22,6 @@ export class Window {
     this.restore();
     this.ensureVisibleOnSomeDisplay();
 
-    console.log(import.meta.dirname);
     const browserOptions: BrowserWindowConstructorOptions = {
       ...this.state,
       ...options,
@@ -52,9 +51,6 @@ export class Window {
       if (input.control && input.shift && input.key.toLowerCase() === 'r') {
         // if (this.backend.isProduction()) return;
         this.window.webContents.reload();
-        _event.preventDefault();
-      }
-      if (input.key.toLowerCase() === 'tab') {
         _event.preventDefault();
       }
     });

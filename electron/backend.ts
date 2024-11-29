@@ -83,9 +83,12 @@ export class Backend {
     });
 
     this.port = Number(process.env.SMP_PORT) || Math.floor(Math.random() * (65535 - 49152) + 49152);
+    
+    let isPortValid = await tcpPortUsed.check(this.port).catch(() => false);
 
-    while (await tcpPortUsed.check(this.port)) {
+    while (isPortValid) {
       this.port = Math.floor(Math.random() * (65535 - 49152) + 49152);
+      isPortValid = await tcpPortUsed.check(this.port).catch(() => false);
     }
 
     const nextApp = (next as unknown as typeof next.default)({
@@ -103,7 +106,7 @@ export class Backend {
       requestHandler(request, res);
     }).listen(this.port, () => {
       this.logger.info('> Ready on http://localhost:' + this.port);
-      this.mainWindow.loadURL('/lang/home');
+      this.mainWindow.loadURL(`/${app.getSystemLocale().replace('-', '_')}/home`);
     });
   }
 

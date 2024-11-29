@@ -94,7 +94,7 @@ export default [
 
       'new-cap': 0,
       'no-async-promise-executor': ['off'],
-      'no-await-in-loop': 'warn',
+      'no-await-in-loop': 'off',
       'no-caller': 2,
       'no-compare-neg-zero': 'error',
       'no-cond-assign': [2, 'except-parens'],
@@ -140,5 +140,7 @@ export default [
       'unicorn/filename-case': ['off'],
       'unicorn/no-null': ['off'],
       'unicorn/no-process-exit': ['off'],
+      'unicorn/numeric-separators-style': ['off'],
+      'unicorn/no-negated-condition': ['off'],
     },
   }];

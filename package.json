@@ -1,7 +1,7 @@
 {
   "name": "whatspendingapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "APP frontend for the WhatsPending Project Management tool",
   "author": {
     "name": "PromisePending Team",
     "email": "contato@allonsve.com"
@@ -12,6 +12,7 @@
   ],
   "license": "GPL-3.0",
   "type": "module",
+  "main": "main/background.js",
   "exports": "./main/background.js",
   "engines": {
     "node": ">=20"
@@ -23,7 +24,8 @@
     "build-electron": "tsc -p electron/",
     "build": "npm run build-renderer && npm run build-electron",
     "pack-app": "npm run build && electron-builder --dir",
-    "dist": "npm run clean && npm run build && electron-builder",
+    "predist": "npm run clean && npm run build",
+    "dist": "npm run build && electron-builder",
     "type-check": "tsc -p ./renderer/tsconfig.json && tsc -p ./electron/tsconfig.json",
     "eslint:fix": "eslint --fix ."
   },
@@ -32,7 +34,7 @@
     "electron-is-dev": "^3.0.1",
     "electron-next": "^3.1.5",
     "electron-serve": "^2.1.1",
-    "electron-store": "^10.0.0",
+    "electron-store": "^8.2.0",
     "next": "^15.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

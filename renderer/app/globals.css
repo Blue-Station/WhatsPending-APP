@@ -41,12 +41,15 @@
   --input-loading-background: var(--gray-300);
   --input-loading-spinner: transparent;
   --input-loading-spinner-top: var(--purple-500);
+
+  --focus-outline-color: var(--bright-green);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline-color: var(--focus-outline-color);
 }
 
 img {
