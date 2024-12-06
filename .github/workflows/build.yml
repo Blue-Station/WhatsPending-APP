@@ -21,16 +21,16 @@ jobs:
       if: success()
       name: Linux (DEB)
       with:
-        name: GLP-Deb-v${{ steps.get_version.outputs.version }}.deb
+        name: WP-Deb-v${{ steps.get_version.outputs.version }}.deb
         path: |
-          dist/GLP-*.deb
+          dist/WP-*.deb
     - uses: actions/upload-artifact@v3
       if: success()
       name: Linux (AppImage)
       with:
-        name: GLP-AppImage-v${{ steps.get_version.outputs.version }}.AppImage
+        name: WP-AppImage-v${{ steps.get_version.outputs.version }}.AppImage
         path: |
-          dist/GLP-*.AppImage
+          dist/WP-*.AppImage
 
   build_on_mac:
     runs-on: macos-latest
@@ -51,8 +51,8 @@ jobs:
       if: success()
       name: Upload Mac Distribution
       with:
-        name: GLP-Darwin-v${{ steps.get_version.outputs.version }}.dmg
-        path: dist/GLP-*.dmg
+        name: WP-Darwin-v${{ steps.get_version.outputs.version }}.dmg
+        path: dist/WP-*.dmg
 
   build_on_win:
     runs-on: windows-latest
@@ -73,8 +73,8 @@ jobs:
       if: success()
       name: Upload Windows Distribution
       with:
-        name: GLP-Win-v${{ steps.get_version.outputs.version }}.exe
+        name: WP-Win-v${{ steps.get_version.outputs.version }}.exe
         path: |
-          dist/GLP-win-*.exe
-          !dist/GLP-win-ia32-*.exe
-          !dist/GLP-win-x64-*.exe
+          dist/WP-win-*.exe
+          !dist/WP-win-ia32-*.exe
+          !dist/WP-win-x64-*.exe
