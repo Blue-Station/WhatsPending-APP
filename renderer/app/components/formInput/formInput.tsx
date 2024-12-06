@@ -15,10 +15,10 @@ export interface IFormInputProps {
   tabIndex?: number;
 }
 
-export default function FormInput(props: IFormInputProps): React.ReactNode {
+export function FormInput(props: IFormInputProps): React.ReactNode {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-undef
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setLoading(props.loading || false);

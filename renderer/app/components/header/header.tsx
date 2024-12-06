@@ -1,9 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './header.module.css';
 
-export default function Header(): React.ReactElement {
+export function Header(): React.ReactElement {
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    const computedStyles = globalThis.getComputedStyle(document.documentElement);
+    (globalThis as any).ipc.send('setTitleBarOverlay', {
+      color: computedStyles.getPropertyValue('--gray-800'),
+      symbolColor: computedStyles.getPropertyValue('--white'),
+      height: computedStyles.getPropertyValue('--header-height'),
+    });
+  });
   return (
     <div id={styles.headerTop}>
       <div id={styles.draggableRegion}></div>

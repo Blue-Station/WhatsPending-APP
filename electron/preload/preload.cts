@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import Store from 'electron-store';
 import path from 'node:path';
 import fs from 'node:fs';
 
@@ -39,28 +38,8 @@ const handler = {
   },
 };
 
-const store = {
-  createStore(options: any): {
-    get: (key: string) => unknown;
-    set: (key: string, value: unknown) => void;
-    delete: (key: string) => void;
-    clear: () => void;
-  } {
-    const createdStore = new Store(options) as any;
-
-    return {
-      get: (key: string): unknown => { return createdStore.get(key); },
-      set: (key: string, value: unknown) => createdStore.set(key, value),
-      delete: (key: string) => createdStore.delete(key),
-      clear: () => createdStore.clear(),
-    };
-  },
-};
-
-contextBridge.exposeInMainWorld('store', store);
 contextBridge.exposeInMainWorld('ipc', handler);
 contextBridge.exposeInMainWorld('path', path);
 contextBridge.exposeInMainWorld('fs', fs);
 
-export type IpcHandler = typeof handler
-export type BackendStore = typeof store
+export type IpcHandler = typeof handler;

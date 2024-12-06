@@ -1,23 +1,23 @@
 import { screen, BrowserWindow, BrowserWindowConstructorOptions, Rectangle } from 'electron';
+import { Storage, Store } from '../storage/index.js';
 import { Backend } from '../backend.js';
-import Store from 'electron-store';
 import path from 'node:path';
 
 export class Window {
   private key = 'window-state';
   private name: string;
   private options: BrowserWindowConstructorOptions;
-  private store: any;
+  private store: Storage;
   private state: Rectangle | null = null;
   private window: BrowserWindow;
   private backend: Backend;
 
   constructor(backend: Backend, windowName: string, options: BrowserWindowConstructorOptions) {
+    this.name = `window-state-${windowName}`;
     this.backend = backend;
     this.options = options;
-    this.name = `window-state-${windowName}`;
     this.resetToDefaults();
-    this.store = new Store({ name: this.name });
+    this.store = new Store(this.backend).create(this.name);
 
     this.restore();
     this.ensureVisibleOnSomeDisplay();

@@ -1,25 +1,35 @@
 appId: com.promisepending.bluestation.whatspending
 productName: Whats<Pending>
-copyright: Copyright © 2019 - 2023 BlueStation
+copyright: Copyright © 2019 - 2024 BlueStation
 artifactName: WP-${os}-${arch}-${version}.${ext}
 directories:
   output: dist
   buildResources: resources
 asar: true
 files:
-  - from: .
-    filter:
-      - package.json
-      - main
-      - renderer
-      - resources
+  - "**/*"
+  - main/**/*
+  - "!renderer/**/*"
+  - resources/**/*
+  - "!next.config.ts"
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!**/node_modules/*.d.ts"
+  - "!**/node_modules/.bin"
+  - "!dist"
+  - "!electron"
+  - "!README.md"
+  - "!CHANGELOG.md"
+
+asarUnpack:
+  - "renderer/**/*"
+
 icon: icon.png
 win:
   target:
     - target: nsis
       arch:
         - x64
-        - ia32
 nsis:
   allowToChangeInstallationDirectory: true
   oneClick: false

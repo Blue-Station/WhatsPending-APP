@@ -14,6 +14,27 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: relative;
+  isolation: isolate;
+  --rounding-size: 0.5rem;
+}
+
+#headerTop::before, #headerTop::after {
+  content: '';
+  position: absolute;
+  bottom: calc(0px - var(--rounding-size));
+  left: 0;
+  width: var(--rounding-size);
+  height: var(--rounding-size);
+  background-color: var(--header-background);
+  z-index: 999;
+  mask: radial-gradient(circle at var(--rounding-size) var(--rounding-size), transparent calc(var(--rounding-size) - 1px), var(--header-background) var(--rounding-size));
+}
+
+#headerTop::after {
+  left: unset;
+  right: 0;
+  mask: radial-gradient(circle at 0 var(--rounding-size), transparent calc(var(--rounding-size) - 1px), var(--header-background) var(--rounding-size));
 }
 
 #draggableRegion {

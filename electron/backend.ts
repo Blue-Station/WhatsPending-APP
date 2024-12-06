@@ -1,35 +1,25 @@
 import Electron, { app, Tray, nativeImage, IpcMainEvent, ipcMain, Menu, MenuItem } from 'electron';
-import { Logger, ConsoleEngine } from '@promisepending/logger.js';
 import { BaseEventStructure } from './structures/index.js';
 import { Window } from './helpers/index.js';
 import { events } from './events/index.js';
 import { createServer } from 'node:http';
-import tcpPortUsed from 'tcp-port-used';
 import isDev from 'electron-is-dev';
 import serve from 'electron-serve';
 import path from 'node:path';
 import next from 'next';
+import tcpPortUsed from 'tcp-port-used';
 
 export class Backend {
-  private readonly isProd: boolean = process.env.NODE_ENV === 'production';
   private mainWindow?: Window;
   private systemTray?: Tray;
-  private logger: Logger;
   private port: number;
 
-  public static main(logger?: Logger): Backend {
-    return new Backend(logger);
+  public static main(): Backend {
+    return new Backend();
   }
 
-  public constructor(logger?: Logger) {
-    this.logger = logger || new Logger({
-      prefixes: ['Backend'],
-      disableFatalCrash: true,
-      allLineColored: true,
-    });
-    this.logger.registerListener(new ConsoleEngine({ debug: !this.isProd }));
-
-    if (this.isProd) {
+  public constructor() {
+    if (!isDev) {
       serve({ directory: 'app' });
     } else {
       app.setPath('userData', `${app.getPath('userData')} (development)`);
@@ -91,47 +81,45 @@ export class Backend {
       isPortValid = await tcpPortUsed.check(this.port).catch(() => false);
     }
 
+    console.log('Next App path:', app.getAppPath());
+
     const nextApp = (next as unknown as typeof next.default)({
       dev: isDev,
-      dir: path.resolve(app.getAppPath(), '..', 'renderer'),
+      dir: isDev ? path.resolve(app.getAppPath(), '..', 'renderer') : path.resolve(app.getAppPath(), '..', 'app.asar.unpacked', 'renderer'),
     });
     const requestHandler = nextApp.getRequestHandler();
 
     // Build the renderer code and watch the files
     await nextApp.prepare();
 
-    this.logger.info('> Starting on http://localhost:' + this.port);
+    console.log('> Starting on http://localhost:' + this.port);
     // Create a new native HTTP server (which supports hot code reloading)
     createServer((request: any, res: any) => {
       requestHandler(request, res);
     }).listen(this.port, () => {
-      this.logger.info('> Ready on http://localhost:' + this.port);
-      this.mainWindow.loadURL(`/${app.getSystemLocale().replace('-', '_')}/home`);
+      console.log('> Ready on http://localhost:' + this.port);
+      this.mainWindow.loadURL(`/${app.getSystemLocale()}/home`);
     });
   }
 
   private async registerEvents(): Promise<void> {
     for await (const eventClass of events) {
       try {
-        this.logger.debug('Registering event ' + eventClass.name);
+        console.log('Registering event ' + eventClass.name);
         const event: BaseEventStructure = new eventClass(this);
         if (event.runOnce()) {
           ipcMain.once(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
-            this.logger.error('An error occurred while executing single-run event ' + event.getName(), error);
+            console.error('An error occurred while executing single-run event ' + event.getName(), error);
           }));
         } else {
           ipcMain.on(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
-            this.logger.error('An error occurred while executing event ' + event.getName(), error);
+            console.error('An error occurred while executing event ' + event.getName(), error);
           }));
         }
       } catch (error) {
-        this.logger.error('An error occurred while registering event ' + eventClass.name, error);
+        console.error('An error occurred while registering event ' + eventClass.name, error);
       }
     }
-  }
-
-  public getLogger(): Logger {
-    return this.logger;
   }
 
   public getMainWindow(): Window | undefined {
@@ -143,10 +131,16 @@ export class Backend {
   }
 
   public isProduction(): boolean {
-    return this.isProd;
+    return !isDev;
+  }
+
+  public getApp(): Electron.App {
+    return app;
   }
 
   public getPort(): number {
     return this.port;
   }
 }
+
+Backend.main();

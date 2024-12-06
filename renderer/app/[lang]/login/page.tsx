@@ -1,33 +1,26 @@
 'use client';
-import FormInput from '../../components/formInput/formInput';
-import ErrorBox from '../../components/errorBox/errorBox';
+import { ErrorBox, FormInput } from '../../components';
+import { useParams, useRouter } from 'next/navigation';
 import { pingServer, submitForm } from './submit';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './login.module.css';
-import { useRouter } from 'next/navigation';
 
 function isEmailValid(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 export default function Login(): React.ReactElement {
-  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
-
+  
   const [connectedToServer, setConnectedToServer] = useState(false);
   const [serverIP, setServerIP] = useState('');
-
+  
   const [submited, setSubmited] = useState(false);
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    const store = (globalThis as any).store;
-    const loginStore = store.createStore('user');
-    loginStore.set('email', email);
-    loginStore.set('password', password);
-    loginStore.set('serverIP', serverIP);
-  });
+  const [email, setEmail] = useState('');
+  
+  const param = useParams<{ lang: string }>();
+  const router = useRouter();
 
   return <div id={styles.loginPage}>
     {!connectedToServer ?
@@ -59,10 +52,11 @@ export default function Login(): React.ReactElement {
           setErrorMessage(JSON.stringify(result.data.message ?? result.data));
         } else {
           setErrorMessage('');
-          router.push('/a/home');
+          router.push(`/${param.lang}/home`);
         };
         return false;
       }}>
+        <FormInput type='button' placeholder='<' onClick={async () => { setConnectedToServer(false); }} tabIndex={0} />
         <h1 className={styles.formTitle}>Login</h1>
         { errorMessage ? <ErrorBox key={'ErrorBox'} message={errorMessage}/> : null }
         <FormInput type='email' placeholder='Email' onChange={(value) => { setEmail(value); }} loading={submited} tabIndex={0}/>

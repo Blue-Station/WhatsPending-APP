@@ -5,7 +5,7 @@ export interface IErrorBox {
   message: string;
 }
 
-export default function ErrorBox(props: IErrorBox): React.ReactNode {
+export function ErrorBox(props: IErrorBox): React.ReactNode {
   return (<div className={styles.errorBox}>
     <span>{props.message}</span>
   </div>);

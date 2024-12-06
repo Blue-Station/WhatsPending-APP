@@ -1,8 +1,8 @@
-import React from 'react';
-import './globals.css';
-import Header from './components/header/header';
 import CloseAppHandler from './closeAppHandler';
 import styles from './general.module.css';
+import { Header } from './components';
+import React from 'react';
+import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
