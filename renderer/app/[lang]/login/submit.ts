@@ -9,10 +9,8 @@ export interface IRequestResult {
 export async function pingServer(serverIP: string): Promise<IRequestResult> {
   'use server';
   return new Promise(async (resolve) => {
-    if (!serverIP.startsWith('http')) serverIP = `https://${serverIP}`;
-    const request = await fetch(`${serverIP}/ping`, {
-      method: 'GET',
-    }).catch((error) => {
+    if (!serverIP.startsWith('http')) serverIP = `http${!serverIP.includes('localhost') ? 's' : ''}://${serverIP}`;
+    const request = await fetch(`${serverIP}/ping`, { method: 'GET' }).catch((error) => {
       console.log(error);
       return resolve({ status: 400, data: 'Invalid Server' });
     });
@@ -31,6 +29,7 @@ export async function pingServer(serverIP: string): Promise<IRequestResult> {
 export async function submitForm(serverIP: string, email: string, password: string): Promise<IRequestResult> {
   'use server';
   return new Promise(async (resolve) => {
+    if (!serverIP.startsWith('http')) serverIP = `http${!serverIP.includes('localhost') ? 's' : ''}://${serverIP}`;
     const request = await fetch(`${serverIP}/user/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
@@ -38,6 +37,8 @@ export async function submitForm(serverIP: string, email: string, password: stri
       console.log(error);
       return resolve({ status: 400, data: 'Invalid Credentials' });
     });
+
+    console.log(serverIP);
 
     if (!request) return resolve({ status: 400, data: 'Invalid Credentials' });
     const data = await request.json();

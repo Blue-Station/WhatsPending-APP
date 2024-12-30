@@ -1,5 +1,5 @@
 'use client';
-import { modalBuilder } from './components/modal/modal';
+import { modalBuilder } from './components/';
 import { ReactElement, useEffect } from 'react';
 
 export default function CloseAppHandler(): ReactElement {

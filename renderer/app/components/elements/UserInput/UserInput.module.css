@@ -1,4 +1,4 @@
-.formInput {
+.UserInput {
   position: relative;
   display: flex;
   width: 100%;
@@ -25,10 +25,21 @@
   border-radius: calc(var(--border-radius) * 0.5rem);
   border: var(--inputBox-border-thickness) solid var(--inputBox-border);
   transition: background 0.3s ease;
+}
+
+.rightAlign .inputBox {
   margin-left: auto;
 }
 
-.formInput:has(.inputBox:focus) .inputTitle, .formInput:has(.inputBox:not(:placeholder-shown)) .inputTitle {
+.leftAlign .inputBox {
+  margin-right: auto;
+}
+
+.centerAlign .inputBox {
+  margin-inline: auto;
+}
+
+.UserInput:has(.inputBox:focus) .inputTitle, .UserInput:has(.inputBox:not(:placeholder-shown)) .inputTitle {
   top: 0;
   font-size: 0.75rem;
 }
@@ -39,6 +50,7 @@
   border: none;
   cursor: pointer;
   width: auto;
+  font-size: 1rem;
 }
 
 .inputBox[type="button"]:hover, .inputBox[type="submit"]:hover, .inputBox[type="cancel"]:hover {
@@ -81,6 +93,7 @@
   border-radius: calc(var(--border-radius) * 0.5rem);
   border: var(--inputBox-border-thickness) solid var(--inputBox-border);
   gap: 0.5rem;
+  font-size: 1rem;
   opacity: 0;
   transition: opacity 0.3s ease, width 0.3s ease, display 0.3s ease 0.3s;
   overflow: hidden;
@@ -123,4 +136,27 @@
     opacity: 0;
     width: 100%;
   }
+}
+
+.simple .inputBox {
+  background: transparent;
+  color: var(--input-button-disabled-color);
+  font-weight: bolder;
+  padding-block: 0;
+}
+
+.simple .inputBox[type="button"]:hover, .simple .inputBox[type="submit"]:hover, .simple .inputBox[type="cancel"]:hover {
+  color: var(--input-button-hover);
+  background: var(--input-button-disabled-color);
+}
+
+.simple .inputBox[type="button"]:active, .simple .inputBox[type="submit"]:active, .simple .inputBox[type="cancel"]:active {
+  color: var(--input-button-active);
+  background: var(--input-button-disabled-color);
+}
+
+.simple .inputBox[type="button"]:disabled, .simple .inputBox[type="submit"]:disabled, .simple .inputBox[type="cancel"]:disabled {
+  color: var(--input-button-disabled);
+  background: var(--input-button-disabled-color);
+  cursor: not-allowed;
 }

@@ -1,0 +1,23 @@
+.splitScreen {
+  --percentage: 0;
+  display: grid;
+  grid-template-columns: auto calc(var(--percentage)* 100%);
+  grid-template-rows: 1fr;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+  background: var(--splitScreen-bg);
+}
+
+.leftItem, .rightItem {
+  background: var(--splitScreen-element-bg);
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  position: relative;
+}
+
+.rightItem {
+  border-radius: 0;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}

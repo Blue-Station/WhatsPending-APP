@@ -16,12 +16,11 @@
   padding: 1rem;
   background: var(--login-form-background);
   padding: 1.5rem;
-  gap: 1rem;
+  gap: 0.25rem;
   justify-content: space-between;
   width: fit-content;
   border-radius: calc(var(--border-radius) * 1rem);
 }
-
 
 .formTitle {
   text-align: center;

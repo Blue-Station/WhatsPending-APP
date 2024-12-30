@@ -43,6 +43,9 @@
   --input-loading-spinner-top: var(--purple-500);
 
   --focus-outline-color: var(--bright-green);
+
+  --splitScreen-bg: var(--dark-bg);
+  --splitScreen-element-bg: var(--gray-750);
 }
 
 * {

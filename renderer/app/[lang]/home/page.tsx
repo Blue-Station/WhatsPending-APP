@@ -1,17 +1,21 @@
 'use client';
-import { List, SplitScreen, UserConfigBox } from '../../components';
+import { Chat, List, SplitScreen, UserConfigBox } from '../../components';
 import React, { ReactElement } from 'react';
 import styles from './home.module.css';
 
 export default function Page(): ReactElement {
   return (
     <div id={styles.homePage}>
-      <List/>
+      <List items={[]}/>
       <div id={styles.channelListWrapper}>
-        <List/>
+        <List items={[]}/>
         <UserConfigBox/>
       </div>
-      <SplitScreen />
+      <SplitScreen
+        sizePercentage={0.35}
+        leftItem={<Chat/>}
+        rightItem={<Chat/>}
+      />
     </div>
   );
 }

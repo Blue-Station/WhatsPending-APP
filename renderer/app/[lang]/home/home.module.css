@@ -7,17 +7,15 @@
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 4rem 15rem 1fr;
+  grid-template-columns: 4rem 12rem 1fr;
   align-items: flex-start;
   justify-content: flex-start;
   overflow: hidden;
 }
 
 #channelListWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-rows: 1fr auto;
   height: 100%;
   width: 100%;
 }
