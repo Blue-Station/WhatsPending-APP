@@ -16,6 +16,7 @@ export function Header(): React.ReactElement {
   return (
     <div id={styles.headerTop}>
       <div id={styles.draggableRegion}></div>
+      <div className={styles.NativeControlsArea}></div>
       <div id={styles.headerContent}>
         <div id={styles.leftSide}>
           <h1 id={styles.appTitle}>Whats&lt;Pending&gt;</h1>

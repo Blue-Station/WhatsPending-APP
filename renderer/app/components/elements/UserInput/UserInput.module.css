@@ -4,6 +4,8 @@
   width: 100%;
   font-size: 1rem;
   height: fit-content;
+  --primary-color: unset;
+  --secondary-color: unset;
 }
 
 .inputTitle {
@@ -13,7 +15,7 @@
   transform: translateY(-50%);
   pointer-events: none;
   transition: top 0.3s ease, font-size 0.3s ease;
-  background: var(--inputBox-background);
+  background: var(--primary-color, var(--inputBox-background));
   padding: 0 calc(var(--inputBox-padding) / 2);
 }
 
@@ -21,10 +23,38 @@
   padding: var(--inputBox-padding);
   width: 100%;
   margin: 0;
-  background: var(--inputBox-background);
+  background: var(--primary-color, var(--inputBox-background));
+  color: var(--secondary-color ,var(--inputBox-color));
   border-radius: calc(var(--border-radius) * 0.5rem);
-  border: var(--inputBox-border-thickness) solid var(--inputBox-border);
-  transition: background 0.3s ease;
+  border: var(--inputBox-border-thickness) solid var(--secondary-color, var(--inputBox-border));
+  transition: background 0.3s ease, filter 0.3s ease;
+}
+
+.UserInput:has(.inputBox:focus) .inputTitle, .UserInput:has(.inputBox:not(:placeholder-shown)) .inputTitle {
+  top: 0;
+  font-size: 0.75rem;
+}
+
+button.inputBox, .inputBox[type="button"], .inputBox[type="submit"], .inputBox[type="cancel"] {
+  background: var(--primary-color, var(--input-button-background));
+  color: var(--secondary-color ,var(--input-button-color));
+  border: none;
+  cursor: pointer;
+  width: auto;
+  font-size: 1rem;
+}
+
+.inputBox[type="button"]:hover, .inputBox[type="submit"]:hover, .inputBox[type="cancel"]:hover {
+  filter: brightness(0.8) contrast(1.2);
+}
+
+.inputBox[type="button"]:active, .inputBox[type="submit"]:active, .inputBox[type="cancel"]:active {
+  filter: brightness(0.6) contrast(1.4);
+}
+
+.inputBox[type="button"]:disabled, .inputBox[type="submit"]:disabled, .inputBox[type="cancel"]:disabled {
+  filter: brightness(0.7) contrast(1.3) saturate(0.25);
+  cursor: not-allowed;
 }
 
 .rightAlign .inputBox {
@@ -39,32 +69,9 @@
   margin-inline: auto;
 }
 
-.UserInput:has(.inputBox:focus) .inputTitle, .UserInput:has(.inputBox:not(:placeholder-shown)) .inputTitle {
-  top: 0;
-  font-size: 0.75rem;
-}
-
-.inputBox[type="button"], .inputBox[type="submit"], .inputBox[type="cancel"] {
-  background: var(--input-button-background);
-  color: var(--input-button-color);
-  border: none;
-  cursor: pointer;
-  width: auto;
-  font-size: 1rem;
-}
-
-.inputBox[type="button"]:hover, .inputBox[type="submit"]:hover, .inputBox[type="cancel"]:hover {
-  background: var(--input-button-hover);
-}
-
-.inputBox[type="button"]:active, .inputBox[type="submit"]:active, .inputBox[type="cancel"]:active {
-  background: var(--input-button-active);
-}
-
-.inputBox[type="button"]:disabled, .inputBox[type="submit"]:disabled, .inputBox[type="cancel"]:disabled {
-  background: var(--input-button-disabled);
-  color: var(--input-button-disabled-color);
-  cursor: not-allowed;
+.fillAlign .inputBox {
+  margin: 0;
+  width: 100%;
 }
 
 .loading .inputBox {
@@ -83,7 +90,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  background: var(--input-loading-background);
+  background: var(--primary-color, var(--input-loading-background));
   transition-behavior: allow-discrete;
   display: none;
   flex-direction: row;
@@ -91,7 +98,7 @@
   align-items: center;
   padding: 0 var(--inputBox-padding);
   border-radius: calc(var(--border-radius) * 0.5rem);
-  border: var(--inputBox-border-thickness) solid var(--inputBox-border);
+  border: var(--inputBox-border-thickness) solid var(--secondary-color ,var(--inputBox-border));
   gap: 0.5rem;
   font-size: 1rem;
   opacity: 0;
@@ -111,7 +118,7 @@
   aspect-ratio: 1;
   height: calc(100% - var(--inputBox-padding));
   border: 0.2rem solid var(--input-loading-spinner);
-  border-top-color: var(--input-loading-spinner-top);
+  border-top-color: var(--secondary-color ,var(--input-loading-spinner-top));
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -138,25 +145,29 @@
   }
 }
 
+.fillAlign .loadingBox {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
 .simple .inputBox {
   background: transparent;
-  color: var(--input-button-disabled-color);
+  color: var(--primary-color, var(--input-button-color));
   font-weight: bolder;
   padding-block: 0;
+  justify-items: center;
 }
 
-.simple .inputBox[type="button"]:hover, .simple .inputBox[type="submit"]:hover, .simple .inputBox[type="cancel"]:hover {
-  color: var(--input-button-hover);
-  background: var(--input-button-disabled-color);
+.simple button.inputBox:hover, .simple .inputBox[type="button"]:hover, .simple .inputBox[type="submit"]:hover, .simple .inputBox[type="cancel"]:hover {
+  background: var(--secondary-color ,var(--input-button-background));
+  /* filter: brightness(0.8) contrast(1.2); */
 }
 
-.simple .inputBox[type="button"]:active, .simple .inputBox[type="submit"]:active, .simple .inputBox[type="cancel"]:active {
-  color: var(--input-button-active);
-  background: var(--input-button-disabled-color);
+.simple button.inputBox:active, .simple .inputBox[type="button"]:active, .simple .inputBox[type="submit"]:active, .simple .inputBox[type="cancel"]:active {
+  filter: brightness(0.8) contrast(1.2);
 }
 
-.simple .inputBox[type="button"]:disabled, .simple .inputBox[type="submit"]:disabled, .simple .inputBox[type="cancel"]:disabled {
-  color: var(--input-button-disabled);
-  background: var(--input-button-disabled-color);
+.simple button.inputBox:disabled, .simple .inputBox[type="button"]:disabled, .simple .inputBox[type="submit"]:disabled, .simple .inputBox[type="cancel"]:disabled {
+  filter: brightness(0.9) contrast(1.1) saturate(0.25);
   cursor: not-allowed;
 }

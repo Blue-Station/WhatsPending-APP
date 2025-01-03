@@ -1,12 +1,9 @@
 :root {
+  /* Global */
   interpolate-size: allow-keywords;
-  --header-height: env(titlebar-area-height, 1.75rem);
   --max-width: 1407px;
   --border-radius: 1;
-  --inputBox-padding: 0.5rem;
-  --inputBox-border-thickness: 1px;
 
-  
   /* Colors */
   --white: #fff;
   --black: #0f0f0f;
@@ -17,6 +14,8 @@
   --gray-750: #4a4a4a;
   --gray-800: #424242;
   --gray-900: #29292e;
+  --purple-100: #f5e8ff;
+  --purple-200: #d4bbff;
   --purple-300: #9f75ff;
   --purple-400: #9164fa;
   --purple-500: #8257e5;
@@ -25,27 +24,43 @@
   --bright-yellow: #eba417;
   --bright-green: #14b866;
   --bright-blue: #1469b8;
-
   --dark-bg: #080816;
 
+  /* Pages */
+  /* Pages/Login */
   --login-background: var(--dark-bg) url(/images/AppBackground.svg);
   --login-form-background: var(--gray-100);
-  --inputBox-background: var(--gray-100);
-  --inputBox-border: var(--gray-700);
-  --input-button-background: var(--purple-500);
-  --input-button-color: var(--white);
-  --input-button-hover: var(--purple-400);
-  --input-button-active: var(--purple-800);
-  --input-button-disabled: var(--gray-300);
+  --login-arrow-color: var(--gray-800);
+  --login-back-button-bg: var(--purple-200);
+
+  /* Components */
+  /* Components/Elements */
+  /* Components/Elements/UserInput */
+  --header-height: env(titlebar-area-height, 1.75rem);
+
+  /* Components/Elements/UserInput */
+  --input-loading-spinner:       transparent;
+  --inputBox-padding:            0.5rem;
+  --inputBox-border-thickness:   1px;
+  --input-loading-spinner-top:   var(--purple-500);
+  --inputBox-border:             var(--gray-700);
+  --focus-outline-color:         var(--bright-green);
+  --inputBox-color:              var(--black);
+  --inputBox-background:         var(--gray-100);
+  --input-button-background:     var(--purple-500);
+  --input-loading-background:    var(--gray-300);
+  --input-button-color:          var(--white);
+  --input-button-hover:          var(--purple-400);
+  --input-button-active:         var(--purple-800);
+  --input-button-disabled:       var(--gray-300);
   --input-button-disabled-color: var(--gray-500);
-  --input-loading-background: var(--gray-300);
-  --input-loading-spinner: transparent;
-  --input-loading-spinner-top: var(--purple-500);
 
-  --focus-outline-color: var(--bright-green);
+  /* Components/Layout */
+  /* Components/Layout/SplitScreen */
+  --splitScreen-bg:              var(--dark-bg);
+  --splitScreen-element-bg:      var(--gray-750);
 
-  --splitScreen-bg: var(--dark-bg);
-  --splitScreen-element-bg: var(--gray-750);
+  --user-box-bg: linear-gradient(180deg, var(--purple-800), var(--dark-bg));
 }
 
 * {

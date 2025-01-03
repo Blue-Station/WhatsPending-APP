@@ -1,6 +1,6 @@
 #loginPage {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -8,6 +8,7 @@
   background: var(--login-background);
   background-size: cover;
   background-position: center;
+  position: relative;
 }
 
 .loginForm {
@@ -20,8 +21,40 @@
   justify-content: space-between;
   width: fit-content;
   border-radius: calc(var(--border-radius) * 1rem);
+  position: absolute;
+  transition: transform 0.5s ease-in-out;
 }
 
 .formTitle {
   text-align: center;
+}
+
+.arrowBack {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.arrowBackPart {
+  position: absolute;
+  width: 0.25rem;
+  height: 0.5rem;
+  border-radius: 100vw;
+  background: var(--primary-color, var(--login-arrow-color));
+  transform: translate(-25%, -25%) rotate(45deg);
+}
+
+.arrowBackPart:nth-child(2) {
+  transform: translate(-25%, 25%) rotate(-45deg);
+}
+
+.outLeft {
+  transform: translateX(-100vw);
+}
+
+.outRight {
+  transform: translateX(100vw);
 }

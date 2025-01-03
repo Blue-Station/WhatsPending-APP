@@ -66,40 +66,42 @@ export default function Login(): React.ReactElement {
   const PasswordInput = PasswordProduct[1];
 
   return <div id={styles.loginPage}>
-    {!connectedToServer ?
-      <div key={'serverForm'} className={styles.loginForm}>
-        <h1 className={styles.formTitle}>Connect to Server</h1>
-        <ErrorBox key={'ErrorBox'} message={errorMessage} visible={!!errorMessage}/>
-        <List items={[
-          ServerIpComponent,
-          <UserInput
-            type='submit'
-            title='Next'
-            disabled={ getServerIp().length < 8 }
-            tabIndex={0}
-            loading={submitted}
-            onClick={async () => { await onServerFormSubmit(getServerIp()); }}
-          />,
-        ]}/>
-      </div>
-      : 
-      <div key={'loginForm'} className={styles.loginForm}>
-        <UserInput type='button' title='<' onClick={async () => { setConnectedToServer(false); }} tabIndex={0} align='left' simpleDesign={true}/>
-        <h1 className={styles.formTitle}>Login</h1>
-        <ErrorBox key={'ErrorBox'} message={errorMessage} visible={!!errorMessage}/>
-        <List items={[
-          EmailInput,
-          PasswordInput,
-          <UserInput
-            type='submit'
-            title='Login'
-            tabIndex={0}
-            loading={submitted}
-            onClick={async () => { await onLoginFormSubmit(getServerIp(), getEmail(), getPassword()); }}
-            disabled={ getEmail().length < 3 || getPassword().length < 8 || !isEmailValid(getEmail()) }
-          />,
-        ]}/>
-      </div>
-    }
+    <div className={`${styles.loginForm} ${connectedToServer ? styles.outLeft : ''}`}>
+      <h1 className={styles.formTitle}>Connect to Server</h1>
+      <ErrorBox key={'ErrorBox'} message={errorMessage} visible={!!errorMessage}/>
+      <List items={[
+        ServerIpComponent,
+        <UserInput
+          type='submit'
+          title='Next'
+          disabled={ getServerIp().length < 8 }
+          tabIndex={0}
+          loading={submitted}
+          onClick={async () => { await onServerFormSubmit(getServerIp()); }}
+        />,
+      ]}/>
+    </div>
+    <div className={`${styles.loginForm} ${!connectedToServer ? styles.outRight : ''}`}>
+      <UserInput type='button' onClick={async () => { setConnectedToServer(false); }} tabIndex={0} align='left' simpleDesign={true} secondaryColor='var(--login-back-button-bg)'>
+        <div className={styles.arrowBack}>
+          <div className={styles.arrowBackPart}/>
+          <div className={styles.arrowBackPart}/>
+        </div>
+      </UserInput>
+      <h1 className={styles.formTitle}>Login</h1>
+      <ErrorBox key={'ErrorBox'} message={errorMessage} visible={!!errorMessage}/>
+      <List items={[
+        EmailInput,
+        PasswordInput,
+        <UserInput
+          type='submit'
+          title='Login'
+          tabIndex={0}
+          loading={submitted}
+          onClick={async () => { await onLoginFormSubmit(getServerIp(), getEmail(), getPassword()); }}
+          disabled={ getEmail().length < 3 || getPassword().length < 8 || !isEmailValid(getEmail()) }
+        />,
+      ]}/>
+    </div>
   </div>;
 }

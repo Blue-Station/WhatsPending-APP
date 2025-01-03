@@ -38,10 +38,10 @@ export async function submitForm(serverIP: string, email: string, password: stri
       return resolve({ status: 400, data: 'Invalid Credentials' });
     });
 
-    console.log(serverIP);
-
     if (!request) return resolve({ status: 400, data: 'Invalid Credentials' });
     const data = await request.json();
+
+    if (data.code >= 300) return resolve({ status: data.code, data });
 
     await CookieHandler.set('accessToken', (data.accessToken as string), new Date(Number(data.accessTokenExpires)));
     await CookieHandler.set('refreshToken', (data.refreshToken as string), new Date(Number(data.refreshTokenExpires)));

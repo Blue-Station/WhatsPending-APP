@@ -1,11 +1,78 @@
+#userProfile {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+#userIcon {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--icon-radius);
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  transition: border-radius 0.3s ease;
+}
+
+#userIcon .profilePic {
+  margin: auto;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  overflow: hidden;
+}
+
 #UserConfigBox {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 15rem;
+  height: fit-content;
+  background: var(--user-box-bg);
+  padding: 0.25rem;
+  position: absolute;
+  left: calc(100% + 0.5rem);
+  bottom: calc((1 - var(--is-active)) * -100vh);
+  z-index: 100;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-700);
+  transition: bottom 0.5s ease-in-out;
+}
+
+#UserConfigInfo {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  background-color: var(--gray-800);
-  border-radius: 0.15rem;
-  padding: 0.25rem 0.5rem;
+  background: #0007;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  margin-top: 3rem;
+}
+
+#UserConfigInfo .profilePic {
+  width: 4rem;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  margin-top: -2.25rem;
+  position: relative;
+  isolation: isolate;
+}
+
+#UserConfigInfo .profilePic .profileImg {
+  border-radius: 50%;
+}
+
+#UserConfigInfo .profilePic::before {
+  content: '';
+  inset: -0.33rem;
+  border-radius: 50%;
+  background: #0007;
+  position: absolute;
+  z-index: -1;
+  mask-image: linear-gradient(0deg, transparent 50%, black 50%);
 }
 
 #profileMenu {
@@ -29,17 +96,7 @@
   background: var(--gray-750);
 }
 
-#profilePic {
-  margin-block: auto;
-  width: 2.5rem;
-  height: 2.5rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 0;
-  overflow: hidden;
-}
-
-#profileImg {
+.profileImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -56,7 +113,7 @@
 #profileName {
   margin-block: auto;
   text-align: left;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--white);
   text-overflow: ellipsis;
@@ -75,4 +132,56 @@
   white-space: nowrap;
   width: 100%;
   overflow: hidden;
+}
+
+.logOutButton {
+  width: 100%;
+}
+
+.ChangeAccount {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.arrowBack {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.arrowBackPart {
+  position: absolute;
+  width: 0.25rem;
+  height: 0.5rem;
+  border-radius: 100vw;
+  background: var(--primary-color, var(--login-arrow-color));
+  transform: translate(-25%, -25%) rotate(45deg);
+}
+
+.arrowBackPart:nth-child(2) {
+  transform: translate(-25%, 25%) rotate(-45deg);
+}
+
+.bottomOptions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.icon {
+  aspect-ratio: 1;
+  width: 100%;
+  padding-block: 0.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: invert();
 }
