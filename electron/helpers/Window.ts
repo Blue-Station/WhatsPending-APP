@@ -31,8 +31,6 @@ export class Window {
         preload: path.join(import.meta.dirname, '..', 'preload', 'preload.cjs'),
         ...options.webPreferences,
       },
-      ...(process.platform === 'darwin' ? {} : { titleBarOverlay: true }),
-      titleBarStyle: 'hidden',
       icon: path.join(import.meta.dirname, '..', '..', 'resources', 'icon.png'),
     };
 
@@ -158,7 +156,7 @@ export class Window {
    * @returns A promise that resolves when the URL is loaded.
    **/
   public async loadURL(url: string): Promise<void> {
-    return this.window.loadURL(`http://localhost:${this.backend.getPort()}${url}`);
+    return this.window.loadURL(url);
   }
 
   get windowInstance(): BrowserWindow {

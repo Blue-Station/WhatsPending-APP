@@ -1,0 +1,45 @@
+.systemDecorations {
+  position: fixed;
+  width: 100%;
+  height: var(--system-decorations-grabHandler);
+  app-region: drag;
+  display: flex;
+  flex-direction: row;
+}
+
+.systemDecorations * {
+  app-region: none;
+}
+
+.leftSide, .rightSide {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--system-decorations-background);
+  position: absolute;
+  --margin: 0.5rem;
+  top: var(--margin);
+  display: flex;
+  flex-direction: row;
+  gap: var(--margin);
+}
+
+.leftSide {
+  left: var(--margin);
+}
+
+.rightSide {
+  right: var(--margin);
+}
+
+.occult {
+  display: none;
+}
+
+button {
+  aspect-ratio: 1;
+  height: 1rem;
+  background: var(--button-color);
+  border: 0;
+  border-radius: 100vw;
+  cursor: pointer;
+}

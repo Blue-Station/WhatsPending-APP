@@ -1,0 +1,10 @@
+<div class="systemDecorations">
+  <div [class]="(`leftSide ${leftButtons.length <= 0 && 'occult'}`)">
+    @for (button of leftButtons; track [button.icon, button.icon]) {
+      <button [style]="`--button-color: #${button.color};`">{{button.icon}}</button>
+    }
+  </div>
+  <div [class]="(`rightSide ${rightButtons.length <= 0 && 'occult'}`)">
+    <button>X</button>
+  </div>
+</div>

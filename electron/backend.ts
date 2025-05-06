@@ -2,23 +2,24 @@ import Electron, { app, Tray, nativeImage, IpcMainEvent, ipcMain, Menu, MenuItem
 import { BaseEventStructure } from './structures/index.js';
 import { Window } from './helpers/index.js';
 import { events } from './events/index.js';
-import { createServer } from 'node:http';
 import isDev from 'electron-is-dev';
 import serve from 'electron-serve';
-import path from 'node:path';
-import next from 'next';
-import tcpPortUsed from 'tcp-port-used';
+import { getWindowSettings } from './helpers/WindowDecorationHelper.js';
+import { IWindowFrameSettings } from './helpers/interfaces/IWindowDecorationHelpers.js';
 
 export class Backend {
   private mainWindow?: Window;
   private systemTray?: Tray;
-  private port: number;
+  private _windowSettings: IWindowFrameSettings;
+
+  public get windowSettings(): IWindowFrameSettings { return this._windowSettings; }
+  
 
   public static main(): Backend {
     return new Backend();
   }
 
-  public constructor() {
+  constructor() {
     if (!isDev) {
       serve({ directory: 'app' });
     } else {
@@ -36,6 +37,7 @@ export class Backend {
   }
 
   private async start(): Promise<void> {
+    this._windowSettings = await getWindowSettings();
     const icon = nativeImage.createFromPath('resources/icon.png');
     this.systemTray = new Tray(icon);
     this.systemTray.setTitle('WhatsPending');
@@ -60,7 +62,9 @@ export class Backend {
     this.mainWindow = new Window(this, 'controller', {
       width: 800,
       height: 600,
-      // frame: false,
+      frame: !this.windowSettings.canUseCustomFrame,
+      titleBarOverlay: false,
+      titleBarStyle: this.windowSettings.canUseCustomFrame ? 'hidden' : 'default',
       minWidth: 800,
       minHeight: 600,
     });
@@ -72,34 +76,7 @@ export class Backend {
       this.mainWindow.windowInstance.hide();
     });
 
-    this.port = Number(process.env.SMP_PORT) || Math.floor(Math.random() * (65535 - 49152) + 49152);
-    
-    let isPortValid = await tcpPortUsed.check(this.port).catch(() => false);
-
-    while (isPortValid) {
-      this.port = Math.floor(Math.random() * (65535 - 49152) + 49152);
-      isPortValid = await tcpPortUsed.check(this.port).catch(() => false);
-    }
-
-    console.log('Next App path:', app.getAppPath());
-
-    const nextApp = (next as unknown as typeof next.default)({
-      dev: isDev,
-      dir: isDev ? path.resolve(app.getAppPath(), '..', 'renderer') : path.resolve(app.getAppPath(), '..', 'app.asar.unpacked', 'renderer'),
-    });
-    const requestHandler = nextApp.getRequestHandler();
-
-    // Build the renderer code and watch the files
-    await nextApp.prepare();
-
-    console.log('> Starting on http://localhost:' + this.port);
-    // Create a new native HTTP server (which supports hot code reloading)
-    createServer((request: any, res: any) => {
-      requestHandler(request, res);
-    }).listen(this.port, () => {
-      console.log('> Ready on http://localhost:' + this.port);
-      this.mainWindow.loadURL(`/${app.getSystemLocale()}/home`);
-    });
+    this.mainWindow.loadURL(isDev ? 'http://localhost:4200' : 'TODO: FIXME: Builded html path here!');
   }
 
   private async registerEvents(): Promise<void> {
@@ -108,16 +85,18 @@ export class Backend {
         console.log('Registering event ' + eventClass.name);
         const event: BaseEventStructure = new eventClass(this);
         if (event.runOnce()) {
-          ipcMain.once(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
-            console.error('An error occurred while executing single-run event ' + event.getName(), error);
-          }));
+          ipcMain.once(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => 
+            event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
+              console.error(`An error occurred while executing single-run event ${event.getName()}`, error);
+            }));
         } else {
-          ipcMain.on(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
-            console.error('An error occurred while executing event ' + event.getName(), error);
-          }));
+          ipcMain.on(event.getName(), (receivedEvent: IpcMainEvent, ...arguments_: any[]) => 
+            event.preExecute(receivedEvent, ...arguments_).catch((error: any) => {
+              console.error(`An error occurred while executing event ${event.getName()}`, error);
+            }));
         }
       } catch (error) {
-        console.error('An error occurred while registering event ' + eventClass.name, error);
+        console.error(`An error occurred while registering event ${eventClass.name}`, error);
       }
     }
   }
@@ -136,10 +115,6 @@ export class Backend {
 
   public getApp(): Electron.App {
     return app;
-  }
-
-  public getPort(): number {
-    return this.port;
   }
 }
 

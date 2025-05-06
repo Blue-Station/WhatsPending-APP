@@ -1,6 +1,6 @@
 appId: com.promisepending.bluestation.whatspending
 productName: Whats<Pending>
-copyright: Copyright © 2019 - 2024 BlueStation
+copyright: Copyright © 2019 - 2025 BlueStation
 artifactName: WP-${os}-${arch}-${version}.${ext}
 directories:
   output: dist

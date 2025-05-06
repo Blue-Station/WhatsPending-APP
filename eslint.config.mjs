@@ -87,7 +87,7 @@ export default [
       'linebreak-style': ['error', 'unix'],
 
       'max-len': ['warn', {
-        code: 250,
+        code: 150,
         ignoreComments: true,
         ignoreUrls: true,
       }],
