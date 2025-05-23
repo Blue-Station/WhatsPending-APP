@@ -1,0 +1,15 @@
+#background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #000101;
+}
+
+#modal {
+  background: var(--text-color);
+  color: var(--default-background);
+  padding: 1rem;
+  border-radius: 1rem;
+}

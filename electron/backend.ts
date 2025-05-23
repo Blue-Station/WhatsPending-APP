@@ -5,7 +5,7 @@ import { events } from './events/index.js';
 import isDev from 'electron-is-dev';
 import serve from 'electron-serve';
 import { getWindowSettings } from './helpers/WindowDecorationHelper.js';
-import { IWindowFrameSettings } from './helpers/interfaces/IWindowDecorationHelpers.js';
+import { IWindowFrameSettings } from '../common/interfaces/ISystemDecorations.js';
 
 export class Backend {
   private mainWindow?: Window;
@@ -67,6 +67,8 @@ export class Backend {
       titleBarStyle: this.windowSettings.canUseCustomFrame ? 'hidden' : 'default',
       minWidth: 800,
       minHeight: 600,
+      transparent: true,
+      backgroundColor: '#00FFFFFF',
     });
 
     this.mainWindow.windowInstance.removeMenu();

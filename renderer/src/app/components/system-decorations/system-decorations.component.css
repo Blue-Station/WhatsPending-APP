@@ -13,7 +13,7 @@
 
 .leftSide, .rightSide {
   padding: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background: var(--system-decorations-background);
   position: absolute;
   --margin: 0.5rem;
